@@ -18,6 +18,7 @@ class NoteAdapter(
         val titleTextView: TextView = itemView.findViewById(R.id.noteTitleTextView)
         val bodyTextView: TextView = itemView.findViewById(R.id.noteBodyTextView)
         val noteCategoryTextView: TextView = itemView.findViewById(R.id.noteCategory)
+        val noteDateTextView: TextView = itemView.findViewById(R.id.noteDateTextView)
         val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
     }
 
@@ -32,6 +33,7 @@ class NoteAdapter(
         holder.titleTextView.text = note.title
         holder.bodyTextView.text = note.noteBody
         holder.noteCategoryTextView.text = note.category
+        holder.noteDateTextView.text = note.noteDate.toString()
         holder.deleteButton.setOnClickListener { onDeleteClick(note) }
     }
 

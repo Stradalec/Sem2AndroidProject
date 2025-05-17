@@ -13,6 +13,7 @@ import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import java.util.Date
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             val title = findViewById<EditText>(R.id.titleEditText).text.toString()
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
             if (title.isNotBlank() && content.isNotBlank()) {
-                viewModel.addNote(NoteModel(title = title, category = "Разное", noteBody = content))
+                viewModel.addNote(NoteModel(title = title, category = "Разное", noteBody = content, noteDate = Date()))
                 clearInputFields()
             } else {
                 Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
