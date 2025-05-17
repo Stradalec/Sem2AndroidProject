@@ -1,9 +1,11 @@
 package com.example.sem2androidproject.ui
 
 import android.app.Application
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +15,17 @@ import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: NoteViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
+     lateinit var calendarDate: TextView
+    private var globalSelectedDate: Date = Date()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         observeNotesList()
         getNotes()
         setupAddNoteButton()
+        calendarDate = findViewById(R.id.tvDate)
+        calendarDate.setOnClickListener{
+            showDatePicker()
+        }
     }
     private fun initialiseRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.rView)
@@ -53,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             val title = findViewById<EditText>(R.id.titleEditText).text.toString()
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
             if (title.isNotBlank() && content.isNotBlank()) {
-                viewModel.addNote(NoteModel(title = title, category = "Разное", noteBody = content, noteDate = Date()))
+                viewModel.addNote(NoteModel(title = title, category = "Разное", noteBody = content, noteDate = globalSelectedDate))
                 clearInputFields()
             } else {
                 Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
@@ -65,5 +76,42 @@ class MainActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.titleEditText).text.clear()
         findViewById<EditText>(R.id.contentEditText).text.clear()
     }
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePicker = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate = formatDate(selectedYear, selectedMonth, selectedDay)
+                calendarDate.text = formattedDate
+
+                val selectedDate = getDateFromCalendar(selectedYear, selectedMonth, selectedDay)
+                globalSelectedDate = selectedDate
+            },
+            year,
+            month,
+            day
+        )
+
+        datePicker.show()
+    }
+
+    private fun formatDate(year: Int, month: Int, day: Int): String {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+        return SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.time)
+    }
+
+    private fun getDateFromCalendar(year: Int, month: Int, day: Int): Date {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+        return calendar.time
+    }
+
 }
 
