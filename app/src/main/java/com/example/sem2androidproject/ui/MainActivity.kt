@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         getNotes()
         setupAddNoteButton()
         setupCategorySpinner()
+        categoryViewModel.loadCategoriesByType(EntryType.EXPENSE)
         calendarDate = findViewById(R.id.dateTextView)
         calendarDate.setOnClickListener{
             showDatePicker()
