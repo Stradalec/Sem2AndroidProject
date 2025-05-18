@@ -8,12 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
+import com.example.sem2androidproject.data.local.Category
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class NoteAdapter(
     private var notes: List<NoteModel> = emptyList(),
+    private var categories: Map<Long, Category> = emptyMap(),
     private val getCategoryName: (Long) -> String,
     private val onDeleteClick: (NoteModel) -> Unit,
     private val onEditClick: (NoteModel) -> Unit
@@ -37,7 +39,7 @@ class NoteAdapter(
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.titleTextView.text = note.amount.toString()
-        holder.noteCategoryTextView.text = getCategoryName(note.categoryId)
+        holder.noteCategoryTextView.text = categories[note.categoryId]?.name ?: "—"
         holder.bodyTextView.text = note.noteBody
         holder.noteDateTextView.text = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             .format(Date(note.noteDate))
@@ -45,8 +47,9 @@ class NoteAdapter(
         holder.editButton.setOnClickListener { onEditClick(note)}
     }
 
-    fun updateNotes(newNotes: List<NoteModel>) {
+    fun updateNotes(newNotes: List<NoteModel>, newCategories: Map<Long, Category>) {
         notes = newNotes
+        categories = newCategories
         notifyDataSetChanged()
     }
 

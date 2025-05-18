@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.androidplot:androidplot-core:1.5.10")
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("com.google.dagger:hilt-android:2.55")

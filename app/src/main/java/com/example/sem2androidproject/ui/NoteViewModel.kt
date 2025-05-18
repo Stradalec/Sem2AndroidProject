@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sem2androidproject.data.local.EntryType
+import com.example.sem2androidproject.data.local.NoteDAO
 import com.example.sem2androidproject.domain.ICategoryRepository
 import com.example.sem2androidproject.domain.INoteRepository
 import com.example.sem2androidproject.domain.model.NoteModel
@@ -11,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,6 +21,15 @@ class NoteViewModel @Inject constructor(private val repository: INoteRepository,
     private val _notes = MutableLiveData<List<NoteModel>>()
     val notes: LiveData<List<NoteModel>> = _notes
     private val _categoryName = MutableLiveData<String>()
+    private val _categorySums = MutableLiveData<List<NoteDAO.CategorySum>>()
+    val categorySums: LiveData<List<NoteDAO.CategorySum>> = _categorySums
+
+    fun loadCategorySums(type: EntryType, start: Date, end: Date) {
+        viewModelScope.launch {
+            _categorySums.value = repository.getCategorySums(type, start, end)
+        }
+    }
+
     fun getCategoryNameById(id: Long): LiveData<String> {
         viewModelScope.launch {
             val category = withContext(Dispatchers.IO) {

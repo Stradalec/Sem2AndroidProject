@@ -6,6 +6,8 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -37,11 +39,14 @@ class MainActivity : AppCompatActivity() {
     private var globalSelectedDate: Date = Date()
     private var globalReminderTime: Calendar = Calendar.getInstance()
     private val categoryViewModel: CategoryViewModel by viewModels()
-
+    private var currentCategories: List<Category> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         initialiseRecyclerView()
+        observeCategories()
         observeNotesList()
         getNotes()
         setupAddNoteButton()
@@ -57,6 +62,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnManageCategories).setOnClickListener {
             startActivity(Intent(this, ManageCategoriesActivity::class.java))
         }
+        findViewById<Button>(R.id.btnStatistics).setOnClickListener {
+            startActivity(Intent(this, StatisticsActivity::class.java))
+        }
+
 
     }
     private fun initialiseRecyclerView() {
@@ -81,13 +90,27 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
+
     private fun observeNotesList() {
         viewModel.notes.observe(this) { notes ->
-            notes?.let {
-                adapter.updateNotes(it)
+            val categoryMap = currentCategories.associateBy { it.id }
+            adapter.updateNotes(notes, categoryMap)
+            notes.forEach { note ->
+                Log.d("Notes", "Note ID: ${note.id}, Category ID: ${note.categoryId}")
             }
         }
     }
+
+    private fun observeCategories() {
+        categoryViewModel.categories.observe(this) { categories ->
+            currentCategories = categories
+            // обновляем список заметок с новой категорией!
+            val notes = viewModel.notes.value ?: emptyList()
+            val categoryMap = currentCategories.associateBy { it.id }
+            adapter.updateNotes(notes, categoryMap)
+        }
+    }
+
 
     private fun getNotes() {
         viewModel.loadNotes()
@@ -99,6 +122,7 @@ class MainActivity : AppCompatActivity() {
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
             val spinner = findViewById<Spinner>(R.id.categorySpinner)
             val selectedCategory = spinner.selectedItem as? Category
+            Log.e("smert", selectedCategory.toString())
             val type = when (findViewById<RadioGroup>(R.id.typeRadioGroup).checkedRadioButtonId) {
                 R.id.expenseRadio -> EntryType.EXPENSE
                 else -> EntryType.INCOME
@@ -196,20 +220,35 @@ class MainActivity : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.categorySpinner)
         val radioGroup = findViewById<RadioGroup>(R.id.typeRadioGroup)
 
+        val adapter = ArrayAdapter<Category>(
+            this,
+            android.R.layout.simple_spinner_item,
+            mutableListOf()
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        spinner.adapter = adapter
+
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            val type = if (checkedId == R.id.expenseRadio) EntryType.EXPENSE else EntryType.INCOME
+            val type = when (checkedId) {
+                R.id.expenseRadio -> EntryType.EXPENSE
+                else -> EntryType.INCOME
+            }
             categoryViewModel.loadCategoriesByType(type)
         }
 
         categoryViewModel.categories.observe(this) { categories ->
-            val adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                categories.map { it.name }
-            )
-            spinner.adapter = adapter
+            adapter.clear()
+            adapter.addAll(categories)
+            if (categories.isNotEmpty()) {
+                spinner.setSelection(0)
+            }
         }
+
+        categoryViewModel.loadCategoriesByType(EntryType.EXPENSE)
     }
+
+
     override fun onResume() {
         super.onResume()
         viewModel.loadNotes()

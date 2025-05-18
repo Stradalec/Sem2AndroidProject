@@ -8,6 +8,7 @@ import com.example.sem2androidproject.data.local.Category
 import com.example.sem2androidproject.data.local.EntryType
 import com.example.sem2androidproject.domain.ICategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +20,8 @@ class CategoryViewModel @Inject constructor(
     val categories: LiveData<List<Category>> = _categories
 
     fun loadCategoriesByType(type: EntryType) {
-        viewModelScope.launch {
-            _categories.value = repository.getCategoriesByType(type)
+        viewModelScope.launch(Dispatchers.IO) {
+            _categories.postValue(repository.getCategoriesByType(type))
         }
     }
 

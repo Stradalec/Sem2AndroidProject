@@ -32,4 +32,22 @@ class NoteRepository @Inject constructor(private val noteDAO: NoteDAO) : INoteRe
 
     override suspend fun deleteNote(note: NoteModel) =
         noteDAO.delete(note.toEntity())
+
+    override suspend fun getCategorySums(
+        type: EntryType,
+        start: Date,
+        end: Date
+    ): List<NoteDAO.CategorySum> {
+        return noteDAO.getCategorySums(
+            entryType = type,
+            start = start.time,
+            end = end.time
+        )
+    }
+
+
+    override suspend fun getMonthlyReport(type: EntryType): List<NoteDAO.DateSum> {
+        return noteDAO.getMonthlySums(entryType = type)
+    }
+
 }

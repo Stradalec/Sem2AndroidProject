@@ -29,6 +29,9 @@
         <activity
             android:name=".ui.ManageCategoriesActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.StatisticsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
