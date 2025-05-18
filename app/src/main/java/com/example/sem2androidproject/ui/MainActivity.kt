@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         observeNotesList()
         getNotes()
         setupAddNoteButton()
-        calendarDate = findViewById(R.id.tvDate)
+        calendarDate = findViewById(R.id.dateTextView)
         calendarDate.setOnClickListener{
             showDatePicker()
         }
@@ -63,8 +63,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnGetNotes).setOnClickListener {
             val title = findViewById<EditText>(R.id.titleEditText).text.toString()
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
-            if (title.isNotBlank() && content.isNotBlank()) {
-                viewModel.addNote(NoteModel(title = title, category = "Разное", noteBody = content, noteDate = globalSelectedDate))
+            val category: String = findViewById<EditText>(R.id.categoryEditText).text.toString()
+            if (title.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
+                viewModel.addNote(NoteModel(title = title, category = category, noteBody = content, noteDate = globalSelectedDate))
                 clearInputFields()
             } else {
                 Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()

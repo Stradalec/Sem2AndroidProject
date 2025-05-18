@@ -11,7 +11,15 @@
         android:id="@+id/titleEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Заголовок заметки"
+        android:hint="Сумма"
+        app:layout_constraintBottom_toTopOf="@id/categoryEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <EditText
+        android:id="@+id/categoryEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Категория"
         app:layout_constraintBottom_toTopOf="@id/contentEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -20,12 +28,12 @@
         android:id="@+id/contentEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Содержание заметки"
+        android:hint="Описание"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryEditText" />
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выбрать дату"
@@ -41,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="Создать заметку"
 
-        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rView"
