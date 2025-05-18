@@ -104,7 +104,6 @@ class MainActivity : AppCompatActivity() {
     private fun observeCategories() {
         categoryViewModel.categories.observe(this) { categories ->
             currentCategories = categories
-            // обновляем список заметок с новой категорией!
             val notes = viewModel.notes.value ?: emptyList()
             val categoryMap = currentCategories.associateBy { it.id }
             adapter.updateNotes(notes, categoryMap)
