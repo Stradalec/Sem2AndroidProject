@@ -11,7 +11,8 @@ fun Note.toDomain(): NoteModel {
         title = this.title ?: "Без названия",
         category = this.category ?: "Без категории",
         noteBody = this.noteBody,
-        noteDate = this.noteDate
+        noteDate = this.noteDate,
+        reminderTime = this.reminderTime
     )
 }
 
@@ -21,7 +22,8 @@ fun NoteModel.toEntity(): Note {
         title = this.title,
         category = this.category,
         noteBody = this.noteBody,
-        noteDate = this.noteDate
+        noteDate = this.noteDate,
+        reminderTime = this.reminderTime
     )
 }
 class Converters {

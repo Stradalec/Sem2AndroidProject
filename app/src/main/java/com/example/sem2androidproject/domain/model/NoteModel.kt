@@ -9,5 +9,6 @@ data class NoteModel(
     val title: String,
     val category: String,
     val noteBody: String,
-    val noteDate: Long
+    val noteDate: Long,
+    val reminderTime: Long? = null
 ) : Serializable

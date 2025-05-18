@@ -6,10 +6,15 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.example.sem2androidproject.R
+import com.example.sem2androidproject.domain.ReminderWorker
 import com.example.sem2androidproject.domain.model.NoteModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class EditNoteActivity : AppCompatActivity() {
@@ -45,6 +50,13 @@ class EditNoteActivity : AppCompatActivity() {
                     noteBody = newContent,
                     noteDate = note.noteDate
                 )
+                if (updatedNote.reminderTime != null) {
+                    val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
+                        .setInputData(workDataOf("NOTE_ID" to updatedNote.id))
+                        .setInitialDelay(updatedNote.reminderTime - System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+                        .build()
+                    WorkManager.getInstance(this).enqueue(workRequest)
+                }
                 viewModel.updateNote(updatedNote)
                 finish()
             } else {

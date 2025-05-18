@@ -17,6 +17,9 @@ interface NoteDAO {
     @Delete
     suspend fun delete(note: Note)
 
+    @Query("SELECT * FROM note WHERE id = :id")
+    suspend fun getNoteById(id: Long): Note?
+
     @Update
     suspend fun update(note: Note)
 

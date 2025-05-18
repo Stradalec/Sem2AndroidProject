@@ -22,6 +22,9 @@ class NoteRepository @Inject constructor(private val noteDAO: NoteDAO) : INoteRe
         noteDAO.insertAll(note.toEntity())
     }
 
+    override suspend fun getNoteById(id: Long): NoteModel? {
+        return noteDAO.getNoteById(id)?.toDomain()
+    }
     override suspend fun updateNote(note: NoteModel) {
         noteDAO.update(note.toEntity())
     }

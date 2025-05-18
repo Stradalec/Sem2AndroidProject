@@ -2,6 +2,7 @@ package com.example.sem2androidproject.ui
 
 import android.app.Application
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -27,8 +28,10 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
     private val viewModel: NoteViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
-    lateinit var calendarDate: TextView
+    private lateinit var calendarDate: TextView
     private var globalSelectedDate: Date = Date()
+    private var globalReminderTime: Calendar = Calendar.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         calendarDate = findViewById(R.id.dateTextView)
         calendarDate.setOnClickListener{
             showDatePicker()
+        }
+        findViewById<Button>(R.id.btnSetReminder).setOnClickListener {
+            showTimePicker()
         }
     }
     private fun initialiseRecyclerView() {
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
             val category: String = findViewById<EditText>(R.id.categoryEditText).text.toString()
             if (title.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
-                viewModel.addNote(NoteModel(title = title, category = category, noteBody = content, noteDate = globalSelectedDate.time))
+                viewModel.addNote(NoteModel(title = title, category = category, noteBody = content, noteDate = globalSelectedDate.time, reminderTime = globalReminderTime.timeInMillis))
                 clearInputFields()
             } else {
                 Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
@@ -121,6 +127,26 @@ class MainActivity : AppCompatActivity() {
             set(year, month, day)
         }
         return calendar.time
+    }
+    private fun showTimePicker() {
+        val calendar = Calendar.getInstance()
+        TimePickerDialog(
+            this,
+            { _, hour, minute ->
+                globalReminderTime = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, hour)
+                    set(Calendar.MINUTE, minute)
+                }
+                Toast.makeText(
+                    this@MainActivity,
+                    "Напоминание установлено на: ${hour}:${minute}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            true
+        ).show()
     }
     override fun onResume() {
         super.onResume()

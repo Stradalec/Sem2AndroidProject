@@ -44,12 +44,23 @@
         app:layout_constraintTop_toBottomOf="@+id/contentEditText"/>
 
     <Button
+        android:id="@+id/btnSetReminder"
+        android:text="Установить напоминание"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView"/>
+
+    <Button
         android:id="@+id/btnGetNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Создать заметку"
 
-        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSetReminder" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rView"
