@@ -43,10 +43,15 @@ class EditNoteActivity : AppCompatActivity() {
             val newAmount = findViewById<EditText>(R.id.editAmountEditText).text.toString()
             val newCategory = findViewById<EditText>(R.id.editCategoryEditText).text.toString()
             val newContent = findViewById<EditText>(R.id.editContentEditText).text.toString()
-            val newDoubleAmount = newAmount.toDouble()
+            val amount = try {
+                newAmount.toDouble()
+            } catch (e: NumberFormatException) {
+                Toast.makeText(this, "Некорректная сумма", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (newAmount.isNotBlank() && newCategory.isNotBlank() && newContent.isNotBlank()) {
                 val updatedNote = note.copy(
-                    amount = newDoubleAmount,
+                    amount = amount,
                     category = newCategory,
                     noteBody = newContent,
                     noteDate = note.noteDate

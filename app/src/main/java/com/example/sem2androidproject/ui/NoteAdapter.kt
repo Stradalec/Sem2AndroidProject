@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class NoteAdapter(
     private var notes: List<NoteModel> = emptyList(),
@@ -36,7 +38,8 @@ class NoteAdapter(
         holder.titleTextView.text = note.amount.toString()
         holder.bodyTextView.text = note.noteBody
         holder.noteCategoryTextView.text = note.category
-        holder.noteDateTextView.text = Date(note.noteDate).toString()
+        holder.noteDateTextView.text = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            .format(Date(note.noteDate))
         holder.deleteButton.setOnClickListener { onDeleteClick(note) }
         holder.editButton.setOnClickListener { onEditClick(note)}
     }

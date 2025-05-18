@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Некорректная сумма", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (title.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
+            if (amountText.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
                 viewModel.addNote(NoteModel(amount = amount, category = category, noteBody = content, noteDate = globalSelectedDate.time, reminderTime = globalReminderTime.timeInMillis))
                 clearInputFields()
             } else {
@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     private fun clearInputFields() {
         findViewById<EditText>(R.id.amountEditText).text.clear()
         findViewById<EditText>(R.id.contentEditText).text.clear()
+        findViewById<EditText>(R.id.categoryEditText).text.clear()
     }
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
