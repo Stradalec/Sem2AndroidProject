@@ -13,6 +13,7 @@ import com.example.sem2androidproject.R
 import com.example.sem2androidproject.domain.ReminderWorker
 import com.example.sem2androidproject.domain.model.NoteModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Double
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
@@ -32,20 +33,20 @@ class EditNoteActivity : AppCompatActivity() {
         }
 
 
-        findViewById<EditText>(R.id.editTitleEditText).setText(note.title)
+        findViewById<EditText>(R.id.editAmountEditText).setText(note.amount.toString())
         findViewById<EditText>(R.id.editCategoryEditText).setText(note.category)
         findViewById<EditText>(R.id.editContentEditText).setText(note.noteBody)
 
 
 
         findViewById<Button>(R.id.btnSaveNotes).setOnClickListener {
-            val newTitle = findViewById<EditText>(R.id.editTitleEditText).text.toString()
+            val newAmount = findViewById<EditText>(R.id.editAmountEditText).text.toString()
             val newCategory = findViewById<EditText>(R.id.editCategoryEditText).text.toString()
             val newContent = findViewById<EditText>(R.id.editContentEditText).text.toString()
-
-            if (newTitle.isNotBlank() && newCategory.isNotBlank() && newContent.isNotBlank()) {
+            val newDoubleAmount = newAmount.toDouble()
+            if (newAmount.isNotBlank() && newCategory.isNotBlank() && newContent.isNotBlank()) {
                 val updatedNote = note.copy(
-                    title = newTitle,
+                    amount = newDoubleAmount,
                     category = newCategory,
                     noteBody = newContent,
                     noteDate = note.noteDate

@@ -6,7 +6,7 @@ import java.util.Date
 
 data class NoteModel(
     val id: Long = 0,
-    val title: String,
+    val amount: Double,
     val category: String,
     val noteBody: String,
     val noteDate: Long,

@@ -11,7 +11,7 @@ import javax.inject.Inject
 class NoteRepository @Inject constructor(private val noteDAO: NoteDAO) : INoteRepository {
     override suspend fun addDefaultNote(){
         val defaultNote =
-            NoteModel(id = 0, title = "Спасательный круг", category = "Затычка", noteBody = "Без меня всё развалится", noteDate = Date().time )
+            NoteModel(id = 0, amount = 300.0, category = "Затычка", noteBody = "Без меня всё развалится", noteDate = Date().time )
         noteDAO.insertAll(defaultNote.toEntity())
     }
 

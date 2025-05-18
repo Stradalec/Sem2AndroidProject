@@ -76,11 +76,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAddNoteButton() {
         findViewById<Button>(R.id.btnGetNotes).setOnClickListener {
-            val title = findViewById<EditText>(R.id.titleEditText).text.toString()
+            val amountText = findViewById<EditText>(R.id.amountEditText).text.toString()
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
             val category: String = findViewById<EditText>(R.id.categoryEditText).text.toString()
+            val amount = try {
+                amountText.toDouble()
+            } catch (e: NumberFormatException) {
+                Toast.makeText(this, "Некорректная сумма", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (title.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
-                viewModel.addNote(NoteModel(title = title, category = category, noteBody = content, noteDate = globalSelectedDate.time, reminderTime = globalReminderTime.timeInMillis))
+                viewModel.addNote(NoteModel(amount = amount, category = category, noteBody = content, noteDate = globalSelectedDate.time, reminderTime = globalReminderTime.timeInMillis))
                 clearInputFields()
             } else {
                 Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
@@ -89,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clearInputFields() {
-        findViewById<EditText>(R.id.titleEditText).text.clear()
+        findViewById<EditText>(R.id.amountEditText).text.clear()
         findViewById<EditText>(R.id.contentEditText).text.clear()
     }
     private fun showDatePicker() {

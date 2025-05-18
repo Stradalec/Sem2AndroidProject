@@ -8,7 +8,7 @@ import java.util.Date
 fun Note.toDomain(): NoteModel {
     return NoteModel(
         id = this.id,
-        title = this.title ?: "Без названия",
+        amount = this.amount ?: 0.0,
         category = this.category ?: "Без категории",
         noteBody = this.noteBody,
         noteDate = this.noteDate,
@@ -19,7 +19,7 @@ fun Note.toDomain(): NoteModel {
 fun NoteModel.toEntity(): Note {
     return Note(
         id = this.id,
-        title = this.title,
+        amount = this.amount,
         category = this.category,
         noteBody = this.noteBody,
         noteDate = this.noteDate,

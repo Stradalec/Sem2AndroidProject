@@ -33,7 +33,7 @@ class NoteAdapter(
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
-        holder.titleTextView.text = note.title
+        holder.titleTextView.text = note.amount.toString()
         holder.bodyTextView.text = note.noteBody
         holder.noteCategoryTextView.text = note.category
         holder.noteDateTextView.text = Date(note.noteDate).toString()
