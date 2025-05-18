@@ -9,10 +9,11 @@ fun Note.toDomain(): NoteModel {
     return NoteModel(
         id = this.id,
         amount = this.amount ?: 0.0,
-        category = this.category ?: "Без категории",
         noteBody = this.noteBody,
         noteDate = this.noteDate,
-        reminderTime = this.reminderTime
+        reminderTime = this.reminderTime,
+        categoryId = this.categoryId,
+        type = this.type
     )
 }
 
@@ -20,10 +21,11 @@ fun NoteModel.toEntity(): Note {
     return Note(
         id = this.id,
         amount = this.amount,
-        category = this.category,
         noteBody = this.noteBody,
         noteDate = this.noteDate,
-        reminderTime = this.reminderTime
+        reminderTime = this.reminderTime,
+        categoryId = this.categoryId,
+        type = this.type
     )
 }
 class Converters {

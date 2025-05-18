@@ -12,17 +12,38 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Сумма"
-        app:layout_constraintBottom_toTopOf="@id/categoryEditText"
+        app:layout_constraintBottom_toTopOf="@id/categorySpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <EditText
-        android:id="@+id/categoryEditText"
+    <Spinner
+        android:id="@+id/categorySpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Категория"
-        app:layout_constraintBottom_toTopOf="@id/contentEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
+
+    <RadioGroup
+        android:id="@+id/typeRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categorySpinner">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expenseRadio"
+            android:text="Расход"
+            android:checked="true"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/incomeRadio"
+            android:text="Доход"/>
+    </RadioGroup>
 
     <EditText
         android:id="@+id/contentEditText"
@@ -31,7 +52,7 @@
         android:hint="Описание"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/typeRadioGroup" />
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
@@ -53,6 +74,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"/>
+    <Button
+        android:id="@+id/btnManageCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Управление категориями"
+        app:layout_constraintTop_toBottomOf="@+id/btnGetNotes"/>
 
     <Button
         android:id="@+id/btnGetNotes"
@@ -67,7 +94,7 @@
         android:layout_width="match_parent"
 
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

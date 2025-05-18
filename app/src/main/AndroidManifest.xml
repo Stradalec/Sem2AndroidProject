@@ -26,6 +26,9 @@
         <activity
             android:name=".ui.EditNoteActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.ManageCategoriesActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

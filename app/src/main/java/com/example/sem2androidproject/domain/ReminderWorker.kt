@@ -44,7 +44,7 @@ class ReminderWorker@Inject constructor(private val repository: INoteRepository,
         }
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
-            .setContentTitle(note.category)
+            .setContentTitle(note.amount.toString())
             .setContentText(note.noteBody)
             .setAutoCancel(true)
             .build()

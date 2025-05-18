@@ -1,5 +1,6 @@
 package com.example.sem2androidproject.data.repo
 
+import com.example.sem2androidproject.data.local.EntryType
 import com.example.sem2androidproject.data.local.NoteDAO
 import com.example.sem2androidproject.data.toDomain
 import com.example.sem2androidproject.data.toEntity
@@ -11,7 +12,7 @@ import javax.inject.Inject
 class NoteRepository @Inject constructor(private val noteDAO: NoteDAO) : INoteRepository {
     override suspend fun addDefaultNote(){
         val defaultNote =
-            NoteModel(id = 0, amount = 300.0, category = "Затычка", noteBody = "Без меня всё развалится", noteDate = Date().time )
+            NoteModel(id = 0, amount = 300.0, noteBody = "Без меня всё развалится", noteDate = Date().time, categoryId = 0, type = EntryType.EXPENSE )
         noteDAO.insertAll(defaultNote.toEntity())
     }
 

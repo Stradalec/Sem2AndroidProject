@@ -6,8 +6,11 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -16,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
+import com.example.sem2androidproject.data.local.Category
+import com.example.sem2androidproject.data.local.EntryType
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import java.io.Serializable
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var calendarDate: TextView
     private var globalSelectedDate: Date = Date()
     private var globalReminderTime: Calendar = Calendar.getInstance()
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         observeNotesList()
         getNotes()
         setupAddNoteButton()
+        setupCategorySpinner()
         calendarDate = findViewById(R.id.dateTextView)
         calendarDate.setOnClickListener{
             showDatePicker()
@@ -46,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnSetReminder).setOnClickListener {
             showTimePicker()
         }
+        findViewById<Button>(R.id.btnManageCategories).setOnClickListener {
+            startActivity(Intent(this, ManageCategoriesActivity::class.java))
+        }
+
     }
     private fun initialiseRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.rView)
@@ -57,7 +68,14 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Edit", "Trying to start")
             }
             startActivity(intent)
-        })
+        },  getCategoryName = { categoryId ->
+            var name = "Загрузка..."
+            viewModel.getCategoryNameById(categoryId).observe(this) {
+                name = it
+            }
+            name
+        }
+        )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -78,26 +96,43 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnGetNotes).setOnClickListener {
             val amountText = findViewById<EditText>(R.id.amountEditText).text.toString()
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
-            val category: String = findViewById<EditText>(R.id.categoryEditText).text.toString()
+            val spinner = findViewById<Spinner>(R.id.categorySpinner)
+            val selectedCategory = spinner.selectedItem as? Category
+            val type = when (findViewById<RadioGroup>(R.id.typeRadioGroup).checkedRadioButtonId) {
+                R.id.expenseRadio -> EntryType.EXPENSE
+                else -> EntryType.INCOME
+            }
+
+            if (amountText.isBlank() || content.isBlank() || selectedCategory == null) {
+                Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val amount = try {
                 amountText.toDouble()
             } catch (e: NumberFormatException) {
                 Toast.makeText(this, "Некорректная сумма", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (amountText.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
-                viewModel.addNote(NoteModel(amount = amount, category = category, noteBody = content, noteDate = globalSelectedDate.time, reminderTime = globalReminderTime.timeInMillis))
-                clearInputFields()
-            } else {
-                Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
-            }
+
+            viewModel.addNote(
+                NoteModel(
+                    amount = amount,
+                    noteBody = content,
+                    noteDate = globalSelectedDate.time,
+                    reminderTime = globalReminderTime.timeInMillis,
+                    categoryId = selectedCategory.id,
+                    type = type
+                )
+            )
+            clearInputFields()
         }
     }
+
 
     private fun clearInputFields() {
         findViewById<EditText>(R.id.amountEditText).text.clear()
         findViewById<EditText>(R.id.contentEditText).text.clear()
-        findViewById<EditText>(R.id.categoryEditText).text.clear()
     }
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
@@ -154,6 +189,25 @@ class MainActivity : AppCompatActivity() {
             calendar.get(Calendar.MINUTE),
             true
         ).show()
+    }
+
+    private fun setupCategorySpinner() {
+        val spinner = findViewById<Spinner>(R.id.categorySpinner)
+        val radioGroup = findViewById<RadioGroup>(R.id.typeRadioGroup)
+
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val type = if (checkedId == R.id.expenseRadio) EntryType.EXPENSE else EntryType.INCOME
+            categoryViewModel.loadCategoriesByType(type)
+        }
+
+        categoryViewModel.categories.observe(this) { categories ->
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                categories.map { it.name }
+            )
+            spinner.adapter = adapter
+        }
     }
     override fun onResume() {
         super.onResume()

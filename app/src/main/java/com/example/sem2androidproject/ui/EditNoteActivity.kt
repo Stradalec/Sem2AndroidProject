@@ -34,7 +34,6 @@ class EditNoteActivity : AppCompatActivity() {
 
 
         findViewById<EditText>(R.id.editAmountEditText).setText(note.amount.toString())
-        findViewById<EditText>(R.id.editCategoryEditText).setText(note.category)
         findViewById<EditText>(R.id.editContentEditText).setText(note.noteBody)
 
 
@@ -52,7 +51,6 @@ class EditNoteActivity : AppCompatActivity() {
             if (newAmount.isNotBlank() && newCategory.isNotBlank() && newContent.isNotBlank()) {
                 val updatedNote = note.copy(
                     amount = amount,
-                    category = newCategory,
                     noteBody = newContent,
                     noteDate = note.noteDate
                 )

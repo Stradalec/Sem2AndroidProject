@@ -14,6 +14,7 @@ import java.util.Locale
 
 class NoteAdapter(
     private var notes: List<NoteModel> = emptyList(),
+    private val getCategoryName: (Long) -> String,
     private val onDeleteClick: (NoteModel) -> Unit,
     private val onEditClick: (NoteModel) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
@@ -36,8 +37,8 @@ class NoteAdapter(
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.titleTextView.text = note.amount.toString()
+        holder.noteCategoryTextView.text = getCategoryName(note.categoryId)
         holder.bodyTextView.text = note.noteBody
-        holder.noteCategoryTextView.text = note.category
         holder.noteDateTextView.text = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             .format(Date(note.noteDate))
         holder.deleteButton.setOnClickListener { onDeleteClick(note) }

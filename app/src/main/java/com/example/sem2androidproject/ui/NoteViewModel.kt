@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sem2androidproject.domain.ICategoryRepository
 import com.example.sem2androidproject.domain.INoteRepository
 import com.example.sem2androidproject.domain.model.NoteModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,10 +14,19 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class NoteViewModel @Inject constructor(private val repository: INoteRepository) : ViewModel() {
+class NoteViewModel @Inject constructor(private val repository: INoteRepository, private val categoryRepository: ICategoryRepository) : ViewModel() {
     private val _notes = MutableLiveData<List<NoteModel>>()
     val notes: LiveData<List<NoteModel>> = _notes
-
+    private val _categoryName = MutableLiveData<String>()
+    fun getCategoryNameById(id: Long): LiveData<String> {
+        viewModelScope.launch {
+            val category = withContext(Dispatchers.IO) {
+                categoryRepository.getCategoryById(id)
+            }
+            _categoryName.value = category?.name ?: "Неизвестно"
+        }
+        return _categoryName
+    }
     init {
         viewModelScope.launch(Dispatchers.IO) {
             addDefaultNoteIfNeeded()
