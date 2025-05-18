@@ -38,7 +38,6 @@ class NoteViewModel @Inject constructor(private val repository: INoteRepository)
             try {
                 _notes.postValue(repository.getAllNotes())
             } catch (e: Exception) {
-
                 _notes.postValue( null)
             }
         }

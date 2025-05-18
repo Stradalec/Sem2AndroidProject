@@ -122,6 +122,9 @@ class MainActivity : AppCompatActivity() {
         }
         return calendar.time
     }
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadNotes()
+    }
 }
 
