@@ -11,5 +11,5 @@ data class Note(
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "category") val category: String?,
     @ColumnInfo(name = "body") val noteBody: String,
-    @ColumnInfo(name = "date") val noteDate: Date
+    @ColumnInfo(name = "date") val noteDate: Long
 )

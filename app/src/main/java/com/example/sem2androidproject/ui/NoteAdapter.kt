@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
+import java.util.Date
 
 class NoteAdapter(
     private var notes: List<NoteModel> = emptyList(),
-    private val onDeleteClick: (NoteModel) -> Unit
+    private val onDeleteClick: (NoteModel) -> Unit,
+    private val onEditClick: (NoteModel) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,6 +21,7 @@ class NoteAdapter(
         val bodyTextView: TextView = itemView.findViewById(R.id.noteBodyTextView)
         val noteCategoryTextView: TextView = itemView.findViewById(R.id.noteCategory)
         val noteDateTextView: TextView = itemView.findViewById(R.id.noteDateTextView)
+        val editButton: ImageButton = itemView.findViewById(R.id.editButton)
         val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
     }
 
@@ -33,8 +36,9 @@ class NoteAdapter(
         holder.titleTextView.text = note.title
         holder.bodyTextView.text = note.noteBody
         holder.noteCategoryTextView.text = note.category
-        holder.noteDateTextView.text = note.noteDate.toString()
+        holder.noteDateTextView.text = Date(note.noteDate).toString()
         holder.deleteButton.setOnClickListener { onDeleteClick(note) }
+        holder.editButton.setOnClickListener { onEditClick(note)}
     }
 
     fun updateNotes(newNotes: List<NoteModel>) {

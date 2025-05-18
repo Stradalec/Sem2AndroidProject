@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
+
+    <EditText
+        android:id="@+id/editTitleEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Сумма"
+        app:layout_constraintBottom_toTopOf="@id/editCategoryEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <EditText
+        android:id="@+id/editCategoryEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Категория"
+        app:layout_constraintBottom_toTopOf="@id/editContentEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editContentEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Описание"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCategoryEditText" />
+
+
+    <Button
+        android:id="@+id/btnSaveNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+
+        app:layout_constraintTop_toBottomOf="@+id/editContentEditText" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

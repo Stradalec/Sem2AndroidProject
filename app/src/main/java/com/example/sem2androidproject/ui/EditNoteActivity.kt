@@ -1,0 +1,55 @@
+package com.example.sem2androidproject.ui
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.example.sem2androidproject.R
+import com.example.sem2androidproject.domain.model.NoteModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
+
+@AndroidEntryPoint
+class EditNoteActivity : AppCompatActivity() {
+    private val viewModel: NoteViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_note)
+
+        val note = intent.getSerializableExtra("note") as? NoteModel
+        if (note == null) {
+            Toast.makeText(this, "Ошибка загрузки заметки", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+
+        findViewById<EditText>(R.id.editTitleEditText).setText(note.title)
+        findViewById<EditText>(R.id.editCategoryEditText).setText(note.category)
+        findViewById<EditText>(R.id.editContentEditText).setText(note.noteBody)
+
+
+
+        findViewById<Button>(R.id.btnSaveNotes).setOnClickListener {
+            val newTitle = findViewById<EditText>(R.id.editTitleEditText).text.toString()
+            val newCategory = findViewById<EditText>(R.id.editCategoryEditText).text.toString()
+            val newContent = findViewById<EditText>(R.id.editContentEditText).text.toString()
+
+            if (newTitle.isNotBlank() && newCategory.isNotBlank() && newContent.isNotBlank()) {
+                val updatedNote = note.copy(
+                    title = newTitle,
+                    category = newCategory,
+                    noteBody = newContent,
+                    noteDate = note.noteDate
+                )
+                viewModel.updateNote(updatedNote)
+                finish()
+            } else {
+                Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}

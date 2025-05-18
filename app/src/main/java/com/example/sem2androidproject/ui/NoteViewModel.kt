@@ -57,4 +57,13 @@ class NoteViewModel @Inject constructor(private val repository: INoteRepository)
             loadNotes()
         }
     }
+
+    fun updateNote(note: NoteModel) {
+        viewModelScope.launch {
+            repository.updateNote(note)
+            loadNotes()
+        }
+
+    }
+
 }

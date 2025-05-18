@@ -2,7 +2,9 @@ package com.example.sem2androidproject.ui
 
 import android.app.Application
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -15,6 +17,7 @@ import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -24,7 +27,7 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
     private val viewModel: NoteViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
-     lateinit var calendarDate: TextView
+    lateinit var calendarDate: TextView
     private var globalSelectedDate: Date = Date()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.rView)
         adapter = NoteAdapter(onDeleteClick = { noteModel: NoteModel ->
             viewModel.deleteNote(noteModel)
+        }, onEditClick = { noteModel: NoteModel ->
+            val intent = Intent(this@MainActivity, EditNoteActivity::class.java).apply {
+                putExtra("note", noteModel as Serializable)
+                Log.e("Edit", "Trying to start")
+            }
+            startActivity(intent)
         })
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -65,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             val content = findViewById<EditText>(R.id.contentEditText).text.toString()
             val category: String = findViewById<EditText>(R.id.categoryEditText).text.toString()
             if (title.isNotBlank() && content.isNotBlank() && category.isNotBlank()) {
-                viewModel.addNote(NoteModel(title = title, category = category, noteBody = content, noteDate = globalSelectedDate))
+                viewModel.addNote(NoteModel(title = title, category = category, noteBody = content, noteDate = globalSelectedDate.time))
                 clearInputFields()
             } else {
                 Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
@@ -90,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                 calendarDate.text = formattedDate
 
                 val selectedDate = getDateFromCalendar(selectedYear, selectedMonth, selectedDay)
-                globalSelectedDate = selectedDate
+                globalSelectedDate.time = selectedDate.time
             },
             year,
             month,

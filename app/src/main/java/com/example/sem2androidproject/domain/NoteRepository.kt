@@ -6,5 +6,7 @@ interface INoteRepository {
     suspend fun addDefaultNote()
     suspend fun getAllNotes(): List<NoteModel>
     suspend fun insetNote(note: NoteModel)
+
+    suspend fun updateNote(note: NoteModel)
     suspend fun deleteNote(note: NoteModel)
 }
