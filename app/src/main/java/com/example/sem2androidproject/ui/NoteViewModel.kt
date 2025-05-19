@@ -30,6 +30,28 @@ class NoteViewModel @Inject constructor(private val repository: INoteRepository,
         }
     }
 
+    fun applyFilters(categoryId: Long?, sortMode: Int) {
+        viewModelScope.launch {
+            var result = repository.getAllNotes()
+
+
+            if (categoryId != null) {
+                result = result.filter { note -> note.categoryId == categoryId }
+            }
+
+
+            result = when (sortMode) {
+                0 -> result.sortedByDescending { it.noteDate }
+                1 -> result.sortedBy { it.noteDate }
+                2 -> result.sortedBy { it.amount }
+                3 -> result.sortedByDescending { it.amount }
+                else -> result
+            }
+
+            _notes.value = result
+        }
+    }
+
     fun getCategoryNameById(id: Long): LiveData<String> {
         viewModelScope.launch {
             val category = withContext(Dispatchers.IO) {

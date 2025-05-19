@@ -20,5 +20,9 @@ data class Category(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
     val type: EntryType
-)
+) {
+    override fun toString(): String {
+        return name
+    }
+}
 enum class EntryType { EXPENSE, INCOME }

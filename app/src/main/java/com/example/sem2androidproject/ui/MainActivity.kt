@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private var globalReminderTime: Calendar = Calendar.getInstance()
     private val categoryViewModel: CategoryViewModel by viewModels()
     private var currentCategories: List<Category> = emptyList()
+    private lateinit var filterCategorySpinner: Spinner
+    private lateinit var sortSpinner: Spinner
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         getNotes()
         setupAddNoteButton()
         setupCategorySpinner()
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner)
+        sortSpinner = findViewById(R.id.sortSpinner)
+        setupFilterSpinner()
         categoryViewModel.loadCategoriesByType(EntryType.EXPENSE)
         calendarDate = findViewById(R.id.dateTextView)
         calendarDate.setOnClickListener{
@@ -245,6 +251,60 @@ class MainActivity : AppCompatActivity() {
         }
 
         categoryViewModel.loadCategoriesByType(EntryType.EXPENSE)
+    }
+    private fun setupFilterSpinner() {
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner)
+
+
+        val filterAdapter = ArrayAdapter<Any>(
+            this,
+            android.R.layout.simple_spinner_item,
+            mutableListOf("Все категории") as List<Any>
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+
+        filterCategorySpinner.adapter = filterAdapter
+
+        sortSpinner = findViewById(R.id.sortSpinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.sort_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            sortSpinner.adapter = adapter
+        }
+        categoryViewModel.categories.observe(this) { categories ->
+            filterAdapter.clear()
+            filterAdapter.add("Все категории")
+            filterAdapter.addAll(categories)
+        }
+
+
+        filterCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent?.getItemAtPosition(position)
+                val categoryId = when {
+                    position == 0 -> null
+                    selectedItem is Category -> selectedItem.id
+                    else -> null
+                }
+                viewModel.applyFilters(categoryId, sortSpinner.selectedItemPosition)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.applyFilters(
+                    categoryId = if (filterCategorySpinner.selectedItemPosition == 0) null
+                    else (filterCategorySpinner.selectedItem as Category).id,
+                    sortMode = position
+                )
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
 
