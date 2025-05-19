@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,11 @@ class ManageCategoriesActivity : AppCompatActivity() {
         viewModel.loadCategoriesByType(EntryType.EXPENSE)
         setupRecyclerView()
         setupAddButton()
+        findViewById<RadioGroup>(R.id.typeRadioGroup).setOnCheckedChangeListener { _, checkedId ->
+            val type = if (checkedId == R.id.expenseRadio) EntryType.EXPENSE else EntryType.INCOME
+            viewModel.loadCategoriesByType(type)
+        }
+
     }
 
     private fun setupRecyclerView() {
@@ -50,6 +56,7 @@ class ManageCategoriesActivity : AppCompatActivity() {
 
             if (name.isNotBlank()) {
                 viewModel.addCategory(Category(name = name, type = type))
+                findViewById<EditText>(R.id.categoryNameEditText).text.clear()
             }
         }
     }

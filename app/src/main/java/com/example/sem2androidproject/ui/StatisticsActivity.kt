@@ -4,8 +4,11 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.androidplot.xy.BarFormatter
 import com.androidplot.xy.LineAndPointFormatter
 import com.androidplot.xy.SimpleXYSeries
 import com.androidplot.xy.XYPlot
@@ -38,6 +41,10 @@ class StatisticsActivity : AppCompatActivity() {
         viewModel.categorySums.observe(this) { sums ->
             updatePieChart(sums)
         }
+        findViewById<RadioGroup>(R.id.typeRadioGroup).setOnCheckedChangeListener { _, checkedId ->
+            val type = if (checkedId == R.id.expenseRadio) EntryType.EXPENSE else EntryType.INCOME
+        }
+
     }
 
     private fun updatePieChart(sums: List<NoteDAO.CategorySum>) {
@@ -47,17 +54,13 @@ class StatisticsActivity : AppCompatActivity() {
         sums.forEach { sum ->
             val categoryName = viewModel.getCategoryNameById(sum.categoryId)
             val amount = sum.total.toDouble()
-            series.addLast(series.size().toDouble(), amount) // X - индекс, Y - сумма
+            series.addLast(series.size().toDouble(), amount)
         }
 
 
-        val formatter = LineAndPointFormatter(
-            Color.BLUE,
-            Color.GREEN,
-            null,
-            null
-        )
-
+        val formatter = BarFormatter(Color.BLUE, Color.GREEN)
+        val total = sums.sumOf { it.total }
+        findViewById<TextView>(R.id.tvTotal).text = "Общая сумма: $total"
         xyPlot.clear()
         xyPlot.addSeries(series, formatter)
         xyPlot.redraw()

@@ -40,7 +40,6 @@ class EditNoteActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnSaveNotes).setOnClickListener {
             val newAmount = findViewById<EditText>(R.id.editAmountEditText).text.toString()
-            val newCategory = findViewById<EditText>(R.id.editCategoryEditText).text.toString()
             val newContent = findViewById<EditText>(R.id.editContentEditText).text.toString()
             val amount = try {
                 newAmount.toDouble()
@@ -48,7 +47,7 @@ class EditNoteActivity : AppCompatActivity() {
                 Toast.makeText(this, "Некорректная сумма", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (newAmount.isNotBlank() && newCategory.isNotBlank() && newContent.isNotBlank()) {
+            if (newAmount.isNotBlank() &&  newContent.isNotBlank()) {
                 val updatedNote = note.copy(
                     amount = amount,
                     noteBody = newContent,
