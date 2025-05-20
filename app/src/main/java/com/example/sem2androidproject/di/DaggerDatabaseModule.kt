@@ -37,11 +37,7 @@ class NoteDatabaseModule {
     }
     @Provides
     fun provideCategoryDao(database: NoteDatabase): CategoryDAO = database.categoryDao()
-    @Provides
-    @Singleton
-    fun provideNoteRepository(noteDao: NoteDAO): NoteRepository {
-        return NoteRepository(noteDao)
-    }
+
 }
 @Module
 @InstallIn(SingletonComponent::class)

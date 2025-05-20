@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sem2androidproject.R
 import com.example.sem2androidproject.data.local.Category
 import com.example.sem2androidproject.data.local.EntryType
+import com.example.sem2androidproject.data.toDomain
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,7 +42,7 @@ class ManageCategoriesActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.categories.observe(this) { categories ->
-            adapter.submitList(categories)
+            adapter.submitList(categories.map { it.toDomain() })
         }
     }
 

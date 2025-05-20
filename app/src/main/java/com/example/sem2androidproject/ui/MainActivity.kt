@@ -84,12 +84,6 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Edit", "Trying to start")
             }
             startActivity(intent)
-        },  getCategoryName = { categoryId ->
-            var name = "Загрузка..."
-            viewModel.getCategoryNameById(categoryId).observe(this) {
-                name = it
-            }
-            name
         }
         )
         recyclerView.adapter = adapter

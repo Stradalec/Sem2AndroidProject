@@ -15,3 +15,4 @@ interface INoteRepository {
     suspend fun getCategorySums(type: EntryType, start: Date, end: Date): List<NoteDAO.CategorySum>
     suspend fun getMonthlyReport(type: EntryType): List<NoteDAO.DateSum>
 }
+

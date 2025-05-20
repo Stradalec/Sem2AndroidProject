@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sem2androidproject.R
 import com.example.sem2androidproject.data.local.Category
+import com.example.sem2androidproject.data.toEntity
+import com.example.sem2androidproject.domain.model.CategoryModel
 
 class CategoryAdapter(
     private val onDeleteClick: (Category) -> Unit
-) : ListAdapter<Category, CategoryAdapter.ViewHolder>(DiffCallback()) {
+) : ListAdapter<CategoryModel, CategoryAdapter.ViewHolder>(DiffCallback()) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.categoryNameTextView)
@@ -29,11 +31,11 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = getItem(position)
         holder.nameTextView.text = category.name
-        holder.deleteButton.setOnClickListener { onDeleteClick(category) }
+        holder.deleteButton.setOnClickListener { onDeleteClick(category.toEntity()) }
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Category>() {
-        override fun areItemsTheSame(oldItem: Category, newItem: Category) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Category, newItem: Category) = oldItem == newItem
+    class DiffCallback : DiffUtil.ItemCallback<CategoryModel>() {
+        override fun areItemsTheSame(oldItem: CategoryModel, newItem: CategoryModel) = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: CategoryModel, newItem: CategoryModel) = oldItem == newItem
     }
 }

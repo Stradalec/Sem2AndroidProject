@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sem2androidproject.data.local.Category
 import com.example.sem2androidproject.data.local.EntryType
+import com.example.sem2androidproject.data.toDomain
+import com.example.sem2androidproject.data.toEntity
 import com.example.sem2androidproject.domain.ICategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,20 +23,20 @@ class CategoryViewModel @Inject constructor(
 
     fun loadCategoriesByType(type: EntryType) {
         viewModelScope.launch(Dispatchers.IO) {
-            _categories.postValue(repository.getCategoriesByType(type))
+            _categories.postValue(repository.getCategoriesByType(type).map { it.toEntity() })
         }
     }
 
     fun addCategory(category: Category) {
         viewModelScope.launch {
-            repository.addCategory(category)
+            repository.addCategory(category.toDomain())
             loadCategoriesByType(category.type)
         }
     }
 
     fun deleteCategory(category: Category) {
         viewModelScope.launch {
-            repository.deleteCategory(category)
+            repository.deleteCategory(category.toDomain())
             loadCategoriesByType(category.type)
         }
     }

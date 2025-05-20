@@ -16,7 +16,6 @@ import java.util.Locale
 class NoteAdapter(
     private var notes: List<NoteModel> = emptyList(),
     private var categories: Map<Long, Category> = emptyMap(),
-    private val getCategoryName: (Long) -> String,
     private val onDeleteClick: (NoteModel) -> Unit,
     private val onEditClick: (NoteModel) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
