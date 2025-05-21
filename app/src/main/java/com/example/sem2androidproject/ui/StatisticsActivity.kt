@@ -9,12 +9,12 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.androidplot.xy.BarFormatter
-import com.androidplot.xy.LineAndPointFormatter
 import com.androidplot.xy.SimpleXYSeries
 import com.androidplot.xy.XYPlot
 import com.example.sem2androidproject.R
 import com.example.sem2androidproject.data.local.EntryType
 import com.example.sem2androidproject.data.local.NoteDAO
+import com.example.sem2androidproject.ui.note.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import java.util.Date

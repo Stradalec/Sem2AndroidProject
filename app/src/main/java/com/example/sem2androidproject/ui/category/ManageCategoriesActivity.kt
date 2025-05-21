@@ -1,4 +1,4 @@
-package com.example.sem2androidproject.ui
+package com.example.sem2androidproject.ui.category
 
 import android.os.Bundle
 import android.widget.Button

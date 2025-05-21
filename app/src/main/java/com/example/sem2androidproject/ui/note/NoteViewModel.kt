@@ -1,4 +1,4 @@
-package com.example.sem2androidproject.ui
+package com.example.sem2androidproject.ui.note
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

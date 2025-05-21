@@ -1,4 +1,4 @@
-package com.example.sem2androidproject.ui
+package com.example.sem2androidproject.ui.note
 
 import android.view.LayoutInflater
 import android.view.View

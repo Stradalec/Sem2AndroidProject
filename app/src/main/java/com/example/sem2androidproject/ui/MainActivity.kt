@@ -1,13 +1,11 @@
 package com.example.sem2androidproject.ui
 
-import android.app.Application
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -24,8 +22,12 @@ import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
 import com.example.sem2androidproject.data.local.Category
 import com.example.sem2androidproject.data.local.EntryType
+import com.example.sem2androidproject.ui.category.CategoryViewModel
+import com.example.sem2androidproject.ui.category.ManageCategoriesActivity
+import com.example.sem2androidproject.ui.note.EditNoteActivity
+import com.example.sem2androidproject.ui.note.NoteAdapter
+import com.example.sem2androidproject.ui.note.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Calendar

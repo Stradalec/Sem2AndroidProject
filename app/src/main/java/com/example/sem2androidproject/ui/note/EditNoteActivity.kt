@@ -1,4 +1,4 @@
-package com.example.sem2androidproject.ui
+package com.example.sem2androidproject.ui.note
 
 import android.os.Bundle
 import android.widget.Button
@@ -13,8 +13,6 @@ import com.example.sem2androidproject.R
 import com.example.sem2androidproject.domain.ReminderWorker
 import com.example.sem2androidproject.domain.model.NoteModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Double
-import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint

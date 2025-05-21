@@ -24,10 +24,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.EditNoteActivity"
+            android:name=".ui.note.EditNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ManageCategoriesActivity"
+            android:name=".ui.category.ManageCategoriesActivity"
             android:exported="false" />
         <activity
             android:name=".ui.StatisticsActivity"
