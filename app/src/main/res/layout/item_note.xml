@@ -19,33 +19,35 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/noteTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/noteCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginTop="8dp"/>
+<androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/noteCategory"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="18sp"
+    android:layout_marginTop="8dp"/>
 
-            <TextView
-                android:id="@+id/noteBodyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginTop="8dp" />
 
-            <TextView
-                android:id="@+id/noteDateTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginTop="8dp" />
+<androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/noteBodyTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="18sp"
+    android:layout_marginTop="8dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/noteDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginTop="8dp" />
+
 
         </LinearLayout>
         <LinearLayout
@@ -53,18 +55,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:orientation="vertical">
-        <ImageButton
-            android:id="@+id/editButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:contentDescription="Edit note"
-            android:src="@android:drawable/ic_menu_edit" />
-        <ImageButton
-            android:id="@+id/deleteButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:contentDescription="Delete note"
-            android:src="@android:drawable/ic_menu_delete" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="Edit note"
+                android:src="@android:drawable/ic_menu_edit" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/deleteButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="Delete note"
+                android:src="@android:drawable/ic_menu_delete" />
+
         </LinearLayout>
 
     </LinearLayout>

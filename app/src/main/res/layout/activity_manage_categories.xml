@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,39 +12,44 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioButton
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/expenseRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Расход"
-            android:checked="true"/>
+            android:checked="true"
+            android:text="Расход" />
 
-        <RadioButton
+
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/incomeRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Доход"/>
+            android:text="Доход" />
+
+
     </RadioGroup>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/categoryNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Название категории"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:hint="Название категории" />
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добавить категорию"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        android:text="Добавить категорию" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

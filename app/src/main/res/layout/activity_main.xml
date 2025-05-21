@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/amountEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toTopOf="@id/categorySpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <Spinner
+
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/categorySpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -27,25 +28,26 @@
         android:id="@+id/typeRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categorySpinner">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/expenseRadio"
-            android:text="Расход"
-            android:checked="true"/>
-
-        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Расход" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/incomeRadio"
-            android:text="Доход"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Доход" />
+
     </RadioGroup>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/contentEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -53,60 +55,67 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeRadioGroup" />
-    <TextView
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выбрать дату"
         android:clickable="true"
         android:focusable="true"
+        android:text="Выбрать дату"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contentEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/contentEditText" />
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSetReminder"
-        android:text="Установить напоминание"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
+        android:text="Установить напоминание"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextView"/>
-    <Button
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnManageCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Управление категориями"
-        app:layout_constraintTop_toBottomOf="@+id/btnGetNotes"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnGetNotes" />
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnGetNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Создать заметку"
 
         app:layout_constraintTop_toBottomOf="@+id/btnSetReminder" />
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnStatistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Статистика"
-        app:layout_constraintTop_toBottomOf="@+id/btnManageCategories"/>
-    <Spinner
+        app:layout_constraintTop_toBottomOf="@+id/btnManageCategories" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/filterCategorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnStatistics"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnStatistics" />
 
-    <Spinner
+
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/sortSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/filterCategorySpinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/filterCategorySpinner" />
 
 
     <androidx.recyclerview.widget.RecyclerView

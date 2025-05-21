@@ -3,34 +3,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSelectPeriod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Выбрать период"/>
+
     <RadioGroup
         android:id="@+id/typeRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <RadioButton
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/expenseRadio"
             android:text="Расходы"
             android:checked="true"/>
-        <RadioButton
+
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/incomeRadio"
             android:text="Доходы"/>
 
+
     </RadioGroup>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
 
     <com.androidplot.xy.XYPlot
         android:id="@+id/xyPlot"
