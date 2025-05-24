@@ -17,8 +17,10 @@ interface NoteDAO {
 
     @Delete
     suspend fun delete(note: Note)
+
     @Query("SELECT * FROM categories WHERE id = :id")
     suspend fun getCategoryById(id: Long): Category?
+
     @Query("SELECT * FROM notes WHERE id = :id")
     suspend fun getNoteById(id: Long): Note?
 
@@ -28,12 +30,14 @@ interface NoteDAO {
     @Query("SELECT * FROM notes")
     suspend fun getAll(): List<Note>
 
-    @Query("""
+    @Query(
+        """
     SELECT category_id, SUM(amount) 
     FROM notes 
     WHERE entry_type = :entryType AND date BETWEEN :start AND :end 
     GROUP BY category_id
-""")
+"""
+    )
     suspend fun getCategorySums(entryType: EntryType, start: Long, end: Long): List<CategorySum>
 
     data class CategorySum(
@@ -45,13 +49,15 @@ interface NoteDAO {
     @Query("SELECT SUM(amount) FROM notes WHERE entry_type = :entryType AND date BETWEEN :start AND :end")
     suspend fun getTotalByType(entryType: EntryType, start: Long, end: Long): Double
 
-    @Query("""
+    @Query(
+        """
     SELECT strftime('%Y-%m', datetime(date / 1000, 'unixepoch')) AS month, 
            SUM(amount) 
     FROM notes 
     WHERE entry_type = :entryType 
     GROUP BY month
-""")
+"""
+    )
     suspend fun getMonthlySums(entryType: EntryType): List<DateSum>
 
     data class DateSum(

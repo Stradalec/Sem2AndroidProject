@@ -10,7 +10,6 @@ import com.example.sem2androidproject.data.repo.CategoryRepository
 import com.example.sem2androidproject.data.repo.NoteRepository
 import com.example.sem2androidproject.domain.ICategoryRepository
 import com.example.sem2androidproject.domain.INoteRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,10 +34,12 @@ class NoteDatabaseModule {
     fun provideNoteDao(database: NoteDatabase): NoteDAO {
         return database.noteDao()
     }
+
     @Provides
     fun provideCategoryDao(database: NoteDatabase): CategoryDAO = database.categoryDao()
 
 }
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
@@ -50,10 +51,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoryRepository(categoryDAO: CategoryDAO) : ICategoryRepository{
-    return CategoryRepository(categoryDAO)
+    fun provideCategoryRepository(categoryDAO: CategoryDAO): ICategoryRepository {
+        return CategoryRepository(categoryDAO)
     }
 }
+
 @HiltAndroidApp
 class NoteApplication : Application() {
     @Inject

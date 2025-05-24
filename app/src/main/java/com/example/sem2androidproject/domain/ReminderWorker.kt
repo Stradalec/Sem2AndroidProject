@@ -7,11 +7,14 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.sem2androidproject.R
 import com.example.sem2androidproject.domain.model.NoteModel
 import javax.inject.Inject
 
-class ReminderWorker@Inject constructor(private val repository: INoteRepository,context: Context, params: WorkerParameters) :
+class ReminderWorker @Inject constructor(
+    private val repository: INoteRepository,
+    context: Context,
+    params: WorkerParameters
+) :
     CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -29,8 +32,10 @@ class ReminderWorker@Inject constructor(private val repository: INoteRepository,
         }
 
     }
+
     private fun showNotification(note: NoteModel) {
-        val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "reminder_channel"
 
 

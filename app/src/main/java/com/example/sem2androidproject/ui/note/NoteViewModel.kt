@@ -17,7 +17,10 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class NoteViewModel @Inject constructor(private val repository: INoteRepository, private val categoryRepository: ICategoryRepository) : ViewModel() {
+class NoteViewModel @Inject constructor(
+    private val repository: INoteRepository,
+    private val categoryRepository: ICategoryRepository
+) : ViewModel() {
     private val _notes = MutableLiveData<List<NoteModel>>()
     val notes: LiveData<List<NoteModel>> = _notes
     private val _categoryName = MutableLiveData<String>()
@@ -61,6 +64,7 @@ class NoteViewModel @Inject constructor(private val repository: INoteRepository,
         }
         return _categoryName
     }
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             addDefaultNoteIfNeeded()
@@ -82,7 +86,7 @@ class NoteViewModel @Inject constructor(private val repository: INoteRepository,
             try {
                 _notes.postValue(repository.getAllNotes())
             } catch (e: Exception) {
-                _notes.postValue( null)
+                _notes.postValue(null)
             }
         }
     }

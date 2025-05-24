@@ -68,22 +68,27 @@ class StatisticsActivity : AppCompatActivity() {
 
 
     private fun showDateRangePicker() {
-        val startDatePicker = DatePickerDialog(this, { _, year, month, day ->
-            val startDate = Calendar.getInstance().apply { set(year, month, day) }
+        val startDatePicker = DatePickerDialog(
+            this, { _, year, month, day ->
+                val startDate = Calendar.getInstance().apply { set(year, month, day) }
 
-            val endDatePicker = DatePickerDialog(this, { _, endYear, endMonth, endDay ->
-                val endDate = Calendar.getInstance().apply { set(endYear, endMonth, endDay) }
-                loadData(startDate.time, endDate.time)
+                val endDatePicker = DatePickerDialog(
+                    this, { _, endYear, endMonth, endDay ->
+                        val endDate =
+                            Calendar.getInstance().apply { set(endYear, endMonth, endDay) }
+                        loadData(startDate.time, endDate.time)
+                    },
+                    startDate.get(Calendar.YEAR),
+                    startDate.get(Calendar.MONTH),
+                    startDate.get(Calendar.DAY_OF_MONTH)
+                )
+
+                endDatePicker.show()
             },
-                startDate.get(Calendar.YEAR),
-                startDate.get(Calendar.MONTH),
-                startDate.get(Calendar.DAY_OF_MONTH))
-
-            endDatePicker.show()
-        },
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH),
-            Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        )
 
         startDatePicker.show()
     }

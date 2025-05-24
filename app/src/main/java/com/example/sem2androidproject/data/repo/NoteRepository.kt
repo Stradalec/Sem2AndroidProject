@@ -10,9 +10,16 @@ import java.util.Date
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(private val noteDAO: NoteDAO) : INoteRepository {
-    override suspend fun addDefaultNote(){
+    override suspend fun addDefaultNote() {
         val defaultNote =
-            NoteModel(id = 0, amount = 300.0, noteBody = "Без меня всё развалится", noteDate = Date().time, categoryId = 0, type = EntryType.EXPENSE )
+            NoteModel(
+                id = 0,
+                amount = 300.0,
+                noteBody = "Без меня всё развалится",
+                noteDate = Date().time,
+                categoryId = 0,
+                type = EntryType.EXPENSE
+            )
         noteDAO.insertAll(defaultNote.toEntity())
     }
 
@@ -26,6 +33,7 @@ class NoteRepository @Inject constructor(private val noteDAO: NoteDAO) : INoteRe
     override suspend fun getNoteById(id: Long): NoteModel? {
         return noteDAO.getNoteById(id)?.toDomain()
     }
+
     override suspend fun updateNote(note: NoteModel) {
         noteDAO.update(note.toEntity())
     }

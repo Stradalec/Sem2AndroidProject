@@ -1,6 +1,5 @@
 package com.example.sem2androidproject.domain
 
-import com.example.sem2androidproject.data.local.Category
 import com.example.sem2androidproject.data.local.EntryType
 import com.example.sem2androidproject.domain.model.CategoryModel
 

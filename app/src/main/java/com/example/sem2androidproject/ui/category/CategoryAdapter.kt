@@ -35,7 +35,10 @@ class CategoryAdapter(
     }
 
     class DiffCallback : DiffUtil.ItemCallback<CategoryModel>() {
-        override fun areItemsTheSame(oldItem: CategoryModel, newItem: CategoryModel) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: CategoryModel, newItem: CategoryModel) = oldItem == newItem
+        override fun areItemsTheSame(oldItem: CategoryModel, newItem: CategoryModel) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: CategoryModel, newItem: CategoryModel) =
+            oldItem == newItem
     }
 }

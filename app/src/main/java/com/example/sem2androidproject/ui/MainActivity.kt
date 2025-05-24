@@ -18,10 +18,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.R
 import com.example.sem2androidproject.data.local.Category
 import com.example.sem2androidproject.data.local.EntryType
+import com.example.sem2androidproject.domain.model.NoteModel
 import com.example.sem2androidproject.ui.category.CategoryViewModel
 import com.example.sem2androidproject.ui.category.ManageCategoriesActivity
 import com.example.sem2androidproject.ui.note.EditNoteActivity
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         setupFilterSpinner()
         categoryViewModel.loadCategoriesByType(EntryType.EXPENSE)
         calendarDate = findViewById(R.id.dateTextView)
-        calendarDate.setOnClickListener{
+        calendarDate.setOnClickListener {
             showDatePicker()
         }
         findViewById<Button>(R.id.btnSetReminder).setOnClickListener {
@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
     private fun initialiseRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.rView)
         adapter = NoteAdapter(onDeleteClick = { noteModel: NoteModel ->
@@ -160,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.amountEditText).text.clear()
         findViewById<EditText>(R.id.contentEditText).text.clear()
     }
+
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -196,6 +198,7 @@ class MainActivity : AppCompatActivity() {
         }
         return calendar.time
     }
+
     private fun showTimePicker() {
         val calendar = Calendar.getInstance()
         TimePickerDialog(
@@ -248,6 +251,7 @@ class MainActivity : AppCompatActivity() {
 
         categoryViewModel.loadCategoriesByType(EntryType.EXPENSE)
     }
+
     private fun setupFilterSpinner() {
         filterCategorySpinner = findViewById(R.id.filterCategorySpinner)
 
@@ -279,7 +283,12 @@ class MainActivity : AppCompatActivity() {
 
 
         filterCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedItem = parent?.getItemAtPosition(position)
                 val categoryId = when {
                     position == 0 -> null
@@ -292,13 +301,19 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 viewModel.applyFilters(
                     categoryId = if (filterCategorySpinner.selectedItemPosition == 0) null
                     else (filterCategorySpinner.selectedItem as Category).id,
                     sortMode = position
                 )
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }

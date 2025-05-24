@@ -1,9 +1,7 @@
 package com.example.sem2androidproject.domain.model
 
-import androidx.room.ColumnInfo
 import com.example.sem2androidproject.data.local.EntryType
 import java.io.Serializable
-import java.util.Date
 
 
 data class NoteModel(

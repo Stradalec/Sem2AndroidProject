@@ -10,6 +10,7 @@ import androidx.room.Query
 interface CategoryDAO {
     @Query("SELECT * FROM categories WHERE id = :id")
     suspend fun getCategoryById(id: Long): Category?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(category: Category)
 

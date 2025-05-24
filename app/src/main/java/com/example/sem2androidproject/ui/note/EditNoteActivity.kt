@@ -45,7 +45,7 @@ class EditNoteActivity : AppCompatActivity() {
                 Toast.makeText(this, "Некорректная сумма", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (newAmount.isNotBlank() &&  newContent.isNotBlank()) {
+            if (newAmount.isNotBlank() && newContent.isNotBlank()) {
                 val updatedNote = note.copy(
                     amount = amount,
                     noteBody = newContent,
@@ -54,7 +54,10 @@ class EditNoteActivity : AppCompatActivity() {
                 if (updatedNote.reminderTime != null) {
                     val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
                         .setInputData(workDataOf("NOTE_ID" to updatedNote.id))
-                        .setInitialDelay(updatedNote.reminderTime - System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+                        .setInitialDelay(
+                            updatedNote.reminderTime - System.currentTimeMillis(),
+                            TimeUnit.MILLISECONDS
+                        )
                         .build()
                     WorkManager.getInstance(this).enqueue(workRequest)
                 }

@@ -30,14 +30,16 @@ fun NoteModel.toEntity(): Note {
         type = this.type
     )
 }
-fun Category.toDomain(): CategoryModel{
+
+fun Category.toDomain(): CategoryModel {
     return CategoryModel(
         id = this.id,
         name = this.name,
         type = this.type
     )
 }
-fun CategoryModel.toEntity(): Category{
+
+fun CategoryModel.toEntity(): Category {
     return Category(
         id = this.id,
         name = this.name,
