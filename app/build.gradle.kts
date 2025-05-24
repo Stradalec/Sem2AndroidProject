@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id ("kotlin-android")
+    id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
@@ -10,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.example.sem2androidproject"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -36,6 +39,14 @@ android {
 }
 
 dependencies {
+    implementation ("com.google.android.material:material:1.12.0")
+    implementation ("com.androidplot:androidplot-core:1.5.10")
+    implementation ("androidx.work:work-runtime-ktx:2.8.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("com.google.dagger:hilt-android:2.55")
+    kapt ("com.google.dagger:hilt-compiler:2.55")
+    implementation ("androidx.room:room-ktx:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("androidx.core:core:1.12.0")
     implementation(libs.androidx.appcompat)
